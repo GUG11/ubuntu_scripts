@@ -57,12 +57,15 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
 Plugin 'davidhalter/jedi-vim'  "python autocomplete
 Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
 Plugin 'lervag/vimtex' " Latex support
 Plugin 'scrooloose/nerdtree' " Nerd Tree
+Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
 Plugin  'wincent/command-t'
 Plugin 'SirVer/ultisnips' 
+Plugin 'scrooloose/nerdcommenter' " comment
 "Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -146,6 +149,10 @@ endif
 "Always show current position
 set ruler
 
+" highlight the current column and row
+" set cursorline
+" set cursorcolumn
+
 " Height of the command bar
 set cmdheight=2
 
@@ -195,7 +202,8 @@ set foldcolumn=1
 syntax enable 
 
 try
-    colorscheme desert
+    " colorscheme desert
+    colorscheme solarized
 catch
 endtry
 
@@ -494,12 +502,6 @@ noremap <F2> :tabe<Cr>
 noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
 
-" Pathogen
-" execute pathogen#infect()
-
-" NERDTree
-noremap <leader>nt :NERDTree<cr>
-
 " Powerline
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 set laststatus=2
@@ -507,6 +509,7 @@ set showtabline=1
 set noshowmode
 set t_Co=256
 
+let g:Powerline_colorscheme='solarized256'
 " 
 set clipboard=unnamedplus 
 
@@ -516,11 +519,15 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
+" only in #include or opened files
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>jd :YcmCompleter GoToDefinition<cr>
+
 " UtilSnips
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-g>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:UltiSnipsSnippetDirectories=['~/.vim/UltiSnips', 'UltiSnips']
 
@@ -534,3 +541,26 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " latex
 let g:tex_flavor = "latex"
+
+
+" Code folding
+" set foldmethod=indent
+set foldmethod=syntax
+" disable code folding on starting
+set nofoldenable
+
+" *.cpp-*.h switch
+nnoremap <Leader>sw :FSHere<cr>
+
+" NERDTree 
+nnoremap <leader>fl :NERDTreeToggle<cr>
+" set the window width of NERDTree
+let NERDTreeWinSize=32
+" set the location of NERDTree
+let NERDTreeWinPos="left"
+" show hidden files
+let NERDTreeShowHidden=1
+" NERDTree no redundancy
+let NERDTreeMinimalUI=1
+" auto delete
+let NERDTreeAutoDeleteBuffer=1
