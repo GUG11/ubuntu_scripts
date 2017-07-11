@@ -3,10 +3,10 @@
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -19,7 +19,7 @@
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -58,15 +58,17 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
-Plugin 'davidhalter/jedi-vim'  "python autocomplete
-Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
-Plugin 'lervag/vimtex' " Latex support
+" Plugin 'davidhalter/jedi-vim'  "python autocomplete
+" Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
+" Plugin 'lervag/vimtex' " Latex support
 Plugin 'scrooloose/nerdtree' " Nerd Tree
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
-Plugin  'wincent/command-t'
-Plugin 'SirVer/ultisnips' 
-Plugin 'scrooloose/nerdcommenter' " comment
+" Plugin  'wincent/command-t'
+Plugin 'SirVer/ultisnips'
+Plugin 'solarnz/thrift.vim'
+" Plugin 'scrooloose/nerdcommenter' " comment
 "Plugin 'tpope/vim-fugitive'
+Plugin 'vim-airline/vim-airline'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -118,7 +120,7 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 " command W w !sudo tee % > /dev/null
 
@@ -130,7 +132,7 @@ nmap <leader>w :w!<cr>
 set so=7
 
 " Avoid garbled characters in Chinese language windows OS
-let $LANG='en' 
+let $LANG='en'
 set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
@@ -166,23 +168,23 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -198,8 +200,8 @@ set foldcolumn=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
+" Enable syntax highlightin
+syntax enable
 
 try
     " colorscheme desert
@@ -243,8 +245,8 @@ set expandtab
 set smarttab
 
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 " Linebreak on 500 characters
 set lbr
@@ -297,8 +299,8 @@ map <leader>h :bprevious<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -313,7 +315,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -336,8 +338,7 @@ endtry
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l/%L
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -376,7 +377,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
 
 " Open Ag and put the cursor in the right position
-map <leader>g :Ag 
+map <leader>g :Ag
 
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -436,7 +437,7 @@ function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction 
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -497,31 +498,31 @@ endif
 
 " Added by Huayu
 set nu
-inoremap jk <Esc> 
+inoremap jk <Esc>
 noremap <F2> :tabe<Cr>
 noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
+noremap <leader>dp :tabedit%<Cr>
 
 " Powerline
-set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
+set rtp+=/home/hyzhang1993/.local/lib/python2.7/site-packages/powerline/bindings/vim
 set laststatus=2
 set showtabline=1
 set noshowmode
 set t_Co=256
 
 let g:Powerline_colorscheme='solarized256'
-" 
-set clipboard=unnamedplus 
+
+set clipboard=unnamedplus
 
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
 " only in #include or opened files
-nnoremap <leader>jc :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>jd :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
 
 " UtilSnips
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -552,8 +553,8 @@ set nofoldenable
 " *.cpp-*.h switch
 nnoremap <Leader>sw :FSHere<cr>
 
-" NERDTree 
-nnoremap <leader>fl :NERDTreeToggle<cr>
+" NERDTree
+nnoremap <leader>tr :NERDTreeToggle<cr>
 " set the window width of NERDTree
 let NERDTreeWinSize=32
 " set the location of NERDTree
@@ -564,3 +565,9 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " auto delete
 let NERDTreeAutoDeleteBuffer=1
+
+
+" YCM must use the same Python version it's linked against
+let g:ycm_path_to_python_interpreter = '/data/users/hyzhang1993/fbsource/fbcode/third-party-buck/gcc-5-glibc-2.23/build/python/2.7/bin/python2.7'
+" Default ycm_extra_conf.py for fbcode
+let g:ycm_global_ycm_extra_conf = '/home/hyzhang1993/.vim/bundle/YouCompleteMe/ycm_extra_conf_fbcode.py'
