@@ -3,6 +3,9 @@
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
+" Modified:
+"   Huayu Zhang
+"   http://gug11.github.io/ - hyzhang2112@gmail.com
 " Version:
 "       5.0 - 29/05/12 15:43:36
 "
@@ -37,6 +40,7 @@
 "    -> Misc
 "    -> Helper functions
 "
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vundle
@@ -58,30 +62,14 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
-" Plugin 'davidhalter/jedi-vim'  "python autocomplete
-" Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
-" Plugin 'lervag/vimtex' " Latex support
+Plugin 'davidhalter/jedi-vim'  "python autocomplete
+Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
 Plugin 'scrooloose/nerdtree' " Nerd Tree
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
-" Plugin  'wincent/command-t'
 Plugin 'SirVer/ultisnips'
 Plugin 'solarnz/thrift.vim'
-" Plugin 'scrooloose/nerdcommenter' " comment
-"Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdcommenter' " comment
 Plugin 'vim-airline/vim-airline'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -502,16 +490,7 @@ inoremap jk <Esc>
 noremap <F2> :tabe<Cr>
 noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
-noremap <leader>dp :tabedit%<Cr>
-
-" Powerline
-set rtp+=/home/hyzhang1993/.local/lib/python2.7/site-packages/powerline/bindings/vim
-set laststatus=2
-set showtabline=1
-set noshowmode
-set t_Co=256
-
-let g:Powerline_colorscheme='solarized256'
+noremap <leader>dp :tabedit%<Cr>  " create a new tab with the current file
 
 set clipboard=unnamedplus
 
@@ -532,10 +511,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:UltiSnipsSnippetDirectories=['~/.vim/UltiSnips', 'UltiSnips']
 
-
-" Keywords for C++
-" autocmd FileType cpp :setlocal dict+=~/.vim/dictionaries/cplusplus
-" autocmd FileType c :setlocal dict+=~/.vim/dictionaries/cplusplus
 
 " Java autocomplete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -568,6 +543,4 @@ let NERDTreeAutoDeleteBuffer=1
 
 
 " YCM must use the same Python version it's linked against
-let g:ycm_path_to_python_interpreter = '/data/users/hyzhang1993/fbsource/fbcode/third-party-buck/gcc-5-glibc-2.23/build/python/2.7/bin/python2.7'
-" Default ycm_extra_conf.py for fbcode
 let g:ycm_global_ycm_extra_conf = '/home/hyzhang1993/.vim/bundle/YouCompleteMe/ycm_extra_conf_fbcode.py'
