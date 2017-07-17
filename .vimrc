@@ -543,4 +543,4 @@ let NERDTreeAutoDeleteBuffer=1
 
 
 " YCM must use the same Python version it's linked against
-let g:ycm_global_ycm_extra_conf = '/home/hyzhang1993/.vim/bundle/YouCompleteMe/ycm_extra_conf_fbcode.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'

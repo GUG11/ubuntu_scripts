@@ -115,35 +115,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-
-# Fix MATLAB scroll bugs
-synclient HorizEdgeScroll=0 HorizTwoFingerScroll=0
-
-# Configure Powerline
-export TERM="screen-256color"
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-. /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
-
-# for PySpark
-export SPARK_HOME="$HOME/Downloads/Software/spark-2.0.0-bin-hadoop2.7"
-export PYSPARK_SUBMIT_ARG="--master local[2] pyspark-shell"
-# export PYTHONPATH="$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.1-src.zip:$PYTHONPATH"
-export PYTHONPATH="$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.1-src.zip:$PYTHONPATH"
-
-# for Scala
-export SCALA_HOME="/usr/local/share/scala"
-export PATH="$PATH:$SCALA_HOME/bin"
-
-# for java
-export JAVA_HOME="/usr/lib/jvm/jdk1.8.0/"
-export PATH="$PATH:$JAVA_HOME/bin"
-
-# added by Anaconda3 4.3.0 installer
-export PATH="/home/huayu/anaconda3/bin:$PATH"
-
-# cuda
-export PATH="/usr/local/cuda-8.0/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH"
