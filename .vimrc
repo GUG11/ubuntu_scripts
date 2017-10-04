@@ -25,6 +25,9 @@
 " Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
+" Reference:
+"       https://github.com/yangyangwithgnu/use_vim_as_ide
+"
 " Sections:
 "    -> General
 "    -> VIM user interface
@@ -44,6 +47,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vundle
+" Installing vundle 
+"   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
