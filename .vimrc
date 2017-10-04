@@ -64,6 +64,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
 Plugin 'davidhalter/jedi-vim'  "python autocomplete
 Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
+" Plugin 'derekwyatt/vim-scala' " scala autocomplete
+Plugin 'pangloss/vim-javascript' " js
 Plugin 'scrooloose/nerdtree' " Nerd Tree
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
 Plugin 'SirVer/ultisnips'
