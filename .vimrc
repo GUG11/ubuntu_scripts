@@ -25,9 +25,6 @@
 " Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
-" Reference:
-"       https://github.com/yangyangwithgnu/use_vim_as_ide
-"
 " Sections:
 "    -> General
 "    -> VIM user interface
@@ -47,8 +44,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vundle
-" Installing vundle 
-"   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -69,6 +64,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
 Plugin 'davidhalter/jedi-vim'  "python autocomplete
 Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
+Plugin 'mattn/emmet-vim' " html/css
 " Plugin 'derekwyatt/vim-scala' " scala autocomplete
 Plugin 'pangloss/vim-javascript' " js
 Plugin 'scrooloose/nerdtree' " Nerd Tree
@@ -77,6 +73,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'solarnz/thrift.vim'
 Plugin 'scrooloose/nerdcommenter' " comment
 Plugin 'vim-airline/vim-airline'
+Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'dyng/ctrlsf.vim' " regex match
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -210,8 +208,11 @@ set background=dark
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
+    " set t_Co=256
     set guitablabel=%M\ %t
 endif
+
+" forcefully set t_Co
 set t_Co=256
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -506,6 +507,16 @@ set clipboard=unnamedplus
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
+let g:ycm_semantic_triggers = {
+			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+			\ 'cs,lua,javascript': ['re!\w{2}'],
+			\ }
+
+set completeopt=menu,menuone
+let g:ycm_add_preview_to_completeopt = 0
+" let g:ycm_show_diagnostics_ui = 0
+
+
 " only in #include or opened files
 nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>
 nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
@@ -537,6 +548,7 @@ nnoremap <Leader>sw :FSHere<cr>
 
 " NERDTree
 nnoremap <leader>tr :NERDTreeToggle<cr>
+nnoremap <leader>nt :NERDTree
 " set the window width of NERDTree
 let NERDTreeWinSize=32
 " set the location of NERDTree
@@ -547,6 +559,10 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " auto delete
 let NERDTreeAutoDeleteBuffer=1
+
+" vim-bookmarks
+nnoremap <leader>sb :BookmarkSave bookmarks<cr>
+nnoremap <leader>lb :BookmarkLoad bookmarks<cr>
 
 
 " YCM must use the same Python version it's linked against

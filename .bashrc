@@ -115,3 +115,14 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+
+# Fix MATLAB scroll bugs
+synclient HorizEdgeScroll=0 HorizTwoFingerScroll=0
+
+# Configure Powerline
+export TERM="screen-256color"
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+. /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
