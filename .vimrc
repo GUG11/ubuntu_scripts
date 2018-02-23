@@ -75,6 +75,7 @@ Plugin 'scrooloose/nerdcommenter' " comment
 Plugin 'vim-airline/vim-airline'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'dyng/ctrlsf.vim' " regex match
+Plugin 'brookhong/ag.vim' " search patterns
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -366,6 +367,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Huayu: really hard to understand and use
 " => Ag searching and cope displaying
 "    requires ag.vim - it's much better than vimgrep/grep
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -373,7 +375,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
 
 " Open Ag and put the cursor in the right position
-map <leader>g :Ag
+map <leader>g :Ag -rn
 
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -429,6 +431,7 @@ map <leader>pp :setlocal paste!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Huayu: I think this function is broken.
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
@@ -500,6 +503,7 @@ noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
 noremap <leader>dp :tabedit%<Cr>  " create a new tab with the current file
 
+
 set clipboard=unnamedplus
 
 
@@ -548,7 +552,7 @@ nnoremap <Leader>sw :FSHere<cr>
 
 " NERDTree
 nnoremap <leader>tr :NERDTreeToggle<cr>
-nnoremap <leader>nt :NERDTree
+nnoremap <leader>nt :NERDTree<cr>
 " set the window width of NERDTree
 let NERDTreeWinSize=32
 " set the location of NERDTree
@@ -567,3 +571,4 @@ nnoremap <leader>lb :BookmarkLoad bookmarks<cr>
 
 " YCM must use the same Python version it's linked against
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
