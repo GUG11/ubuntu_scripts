@@ -60,22 +60,22 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
+Plugin 'scrooloose/nerdcommenter' " comment
+Plugin 'vim-airline/vim-airline'
+Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'brookhong/ag.vim' " search patterns
+" Programming Languages
 Plugin 'Valloric/YouCompleteMe'
+" Plugin 'autozimu/LanguageClient-neovim'  " LSP
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
 Plugin 'davidhalter/jedi-vim'  "python autocomplete
 Plugin 'artur-shaik/vim-javacomplete2' "java autocomplete
 Plugin 'mattn/emmet-vim' " html/css
-" Plugin 'derekwyatt/vim-scala' " scala autocomplete
 Plugin 'pangloss/vim-javascript' " js
-Plugin 'scrooloose/nerdtree' " Nerd Tree
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
-Plugin 'SirVer/ultisnips'
+Plugin 'scrooloose/nerdtree' " Nerd Tree
 Plugin 'solarnz/thrift.vim'
-Plugin 'scrooloose/nerdcommenter' " comment
-Plugin 'vim-airline/vim-airline'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'dyng/ctrlsf.vim' " regex match
-Plugin 'brookhong/ag.vim' " search patterns
+" Deprecated
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -111,12 +111,9 @@ set autoread
 let mapleader = ","
 let g:mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-" command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -209,7 +206,6 @@ set background=dark
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
-    " set t_Co=256
     set guitablabel=%M\ %t
 endif
 
@@ -320,12 +316,12 @@ catch
 endtry
 
 " Return to last edit position when opening files (You want this!)
-" autocmd BufReadPost *
-"      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-"      \   exe "normal! g`\"" |
-"      \ endif
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
 " Remember info about open buffers on close
-" set viminfo^=%
+set viminfo^=%
 
 
 """"""""""""""""""""""""""""""
@@ -371,32 +367,10 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 " => Ag searching and cope displaying
 "    requires ag.vim - it's much better than vimgrep/grep
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" When you press gv you Ag after the selected text
-vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
-
 " Open Ag and put the cursor in the right position
 nnoremap <leader>g viw"ay \| :Ag -rn <C-R>a .
 nnoremap <leader>gf viw"ay \| :Ag -rn ^<C-R>a .
 vnoremap <leader>g "ay \| :Ag -rn "<C-R>a" .
-
-" When you press <leader>r you can search and replace the selected text
-vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
-
-" Do :help cope if you are unsure what cope is. It's super useful!
-"
-" When you search with Ag, display your results in cope by doing:
-"   <leader>cc
-"
-" To go to the next search result do:
-"   <leader>n
-"
-" To go to the previous search results do:
-"   <leader>p
-"
-map <leader>cc :botright cope<cr>
-map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -428,18 +402,9 @@ map <leader>x :e ~/buffer.md<cr>
 map <leader>pp :setlocal paste!<cr>
 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Huayu: I think this function is broken.
-function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction
-
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
     execute "normal! vgvy"
@@ -449,10 +414,6 @@ function! VisualSelection(direction, extra_filter) range
 
     if a:direction == 'b'
         execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call CmdLine("Ag \"" . l:pattern . "\" " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
     elseif a:direction == 'f'
         execute "normal /" . l:pattern . "^M"
     endif
@@ -505,9 +466,12 @@ noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
 noremap <leader>dp :tabedit%<Cr>  " create a new tab with the current file
 
+" set clipboard=unnamedplus " for linux
+set clipboard=unnamed " for mac
 
-set clipboard=unnamedplus
-
+" only in #include or opened files
+nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
 
 " YouCompleteMe
 let g:ycm_server_keep_logfiles = 1
@@ -523,25 +487,8 @@ let g:ycm_add_preview_to_completeopt = 0
 " let g:ycm_show_diagnostics_ui = 0
 
 
-" only in #include or opened files
-nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
-
-" UtilSnips
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-let g:UltiSnipsSnippetDirectories=['~/.vim/UltiSnips', 'UltiSnips']
-
-
 " Java autocomplete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" latex
-let g:tex_flavor = "latex"
-
 
 " Code folding
 " set foldmethod=indent
@@ -554,7 +501,7 @@ nnoremap <Leader>sw :FSHere<cr>
 
 " NERDTree
 nnoremap <leader>tr :NERDTreeToggle<cr>
-nnoremap <leader>nt :NERDTree<cr>
+nnoremap <leader>tf :NERDTreeFind<cr>
 " set the window width of NERDTree
 let NERDTreeWinSize=32
 " set the location of NERDTree
@@ -570,7 +517,6 @@ let NERDTreeAutoDeleteBuffer=1
 nnoremap <leader>sb :BookmarkSave bookmarks<cr>
 nnoremap <leader>lb :BookmarkLoad bookmarks<cr>
 
-
 " YCM must use the same Python version it's linked against
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_server_python_interpreter = '/usr/bin/python3'
+let g:ycm_server_python_interpreter = '/usr/bin/python'
