@@ -40,6 +40,8 @@
 "    -> Misc
 "    -> Helper functions
 "
+" Install vim
+" ./configure --with-features=huge --enable-pythoninterp=yes --enable-python3interp=yes --enable-rubyinterp=yes --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu --enable-cscope --prefix=/usr --enable-gui=gtk2
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -65,7 +67,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'brookhong/ag.vim' " search patterns
 " Programming Languages
-Plugin 'Valloric/YouCompleteMe'
 " Plugin 'autozimu/LanguageClient-neovim'  " LSP
 Plugin 'octol/vim-cpp-enhanced-highlight' " cpp syntax highlight
 Plugin 'davidhalter/jedi-vim'  "python autocomplete
@@ -74,7 +75,11 @@ Plugin 'mattn/emmet-vim' " html/css
 Plugin 'pangloss/vim-javascript' " js
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
 Plugin 'scrooloose/nerdtree' " Nerd Tree
-Plugin 'solarnz/thrift.vim'
+
+" LSP
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'pdavydov108/vim-lsp-cquery'
 " Deprecated
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -288,22 +293,10 @@ map <leader>ba :bufdo bd<cr>
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
-
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -466,26 +459,8 @@ noremap <F3> :tabp<Cr>
 noremap <F4> :tabn<Cr>
 noremap <leader>dp :tabedit%<Cr>  " create a new tab with the current file
 
-" set clipboard=unnamedplus " for linux
-set clipboard=unnamed " for mac
-
-" only in #include or opened files
-nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
-
-" YouCompleteMe
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
-
-let g:ycm_semantic_triggers = {
-			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
-
-set completeopt=menu,menuone
-let g:ycm_add_preview_to_completeopt = 0
-" let g:ycm_show_diagnostics_ui = 0
-
+set clipboard=unnamedplus " for linux
+" set clipboard=unnamed " for mac
 
 " Java autocomplete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -517,6 +492,14 @@ let NERDTreeAutoDeleteBuffer=1
 nnoremap <leader>sb :BookmarkSave bookmarks<cr>
 nnoremap <leader>lb :BookmarkLoad bookmarks<cr>
 
-" YCM must use the same Python version it's linked against
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_server_python_interpreter = '/usr/bin/python'
+" LSP
+if executable('cquery')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'cquery',
+      \ 'cmd': {server_info->['cquery']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': { 'cacheDirectory': '/path/to/cquery/cache' },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
+
