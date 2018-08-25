@@ -74,8 +74,8 @@ antigen bundle Vifon/deer
 antigen bundle colored-man-pages
 
 # uncomment the line below to enable theme
-antigen theme agnoster
-
+# antigen theme agnoster
+antigen theme afowler
 
 # check login shell
 if [[ -o login ]]; then
