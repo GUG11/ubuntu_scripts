@@ -46,6 +46,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vundle
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -75,6 +76,7 @@ Plugin 'mattn/emmet-vim' " html/css
 Plugin 'pangloss/vim-javascript' " js
 Plugin 'derekwyatt/vim-fswitch' " switch between .cpp and .h files
 Plugin 'scrooloose/nerdtree' " Nerd Tree
+Plugin 'Valloric/YouCompleteMe'
 
 " LSP
 Plugin 'prabirshrestha/async.vim'
@@ -487,6 +489,20 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " auto delete
 let NERDTreeAutoDeleteBuffer=1
+
+" YCM
+" only in #include or opened files	
+nnoremap <leader>c :YcmCompleter GoToDeclaration<cr>	
+nnoremap <leader>d :YcmCompleter GoToDefinition<cr>	
+ " YouCompleteMe	
+let g:ycm_server_keep_logfiles = 1	
+let g:ycm_server_log_level = 'debug'	
+" let g:ycm_semantic_triggers = {	
+"			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],	
+"			\ 'cs,lua,javascript': ['re!\w{2}'],	
+"			\ }	
+ set completeopt=menu,menuone	
+let g:ycm_add_preview_to_completeopt = 0
 
 " vim-bookmarks
 nnoremap <leader>sb :BookmarkSave bookmarks<cr>
