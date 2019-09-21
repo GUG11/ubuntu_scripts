@@ -1,8 +1,0 @@
-[user]
-	email = hyzhang2112@gmail.com
-	name = GUG11
-[push]
-	default = current
-[alias]
-	sl = log --graph --pretty=short --decorate --abbrev-commit --all
-	up = checkout
