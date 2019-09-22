@@ -1,0 +1,18 @@
+{
+    "shortcuts": [
+        {
+            "command": "notebook:change-cell-to-code",
+            "keys": [
+                "Shift Y"
+            ],
+            "selector": ".jp-Notebook:focus"
+        },
+        {
+            "command": "notebook:change-cell-to-markdown",
+            "keys": [
+                "Shift M"
+            ],
+            "selector": ".jp-Notebook:focus"
+        }
+    ]
+}
