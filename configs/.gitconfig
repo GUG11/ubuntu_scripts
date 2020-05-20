@@ -6,3 +6,5 @@
 [alias]
 	sl = log --graph --pretty=short --decorate --abbrev-commit --all
 	up = checkout
+[core]
+	editor = vim
