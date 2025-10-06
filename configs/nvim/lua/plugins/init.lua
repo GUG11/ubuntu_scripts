@@ -2,6 +2,8 @@
 
 return {
 
+  -- Load completion plugins from separate file
+  require('plugins.completion'),
 
   -- Treesitter for syntax highlighting
   {
